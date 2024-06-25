@@ -113,7 +113,7 @@ public class GodotAdivery extends GodotPlugin {
         });
     }
     @UsedByGodot
-    public void prepare_app_open_dd(String placement_id) {
+    public void prepare_app_open_ad(String placement_id) {
         Adivery.prepareAppOpenAd(getGodot().getActivity(),placement_id);
         Adivery.addGlobalListener(new AdiveryListener() {
             public void onAppOpenAdLoaded(String placementId) {

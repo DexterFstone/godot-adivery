@@ -125,7 +125,12 @@ public class GodotAdivery extends GodotPlugin {
     @UsedByGodot
     public void show_app_open_ad(String placement_id) {
         if (Adivery.isLoaded(placement_id)) {
-            Adivery.showAppOpenAd(getGodot().getActivity(), placement_id);
+            getGodot().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Adivery.showAppOpenAd(getGodot().getActivity(), placement_id);
+                }
+            });
         }
     }
 }

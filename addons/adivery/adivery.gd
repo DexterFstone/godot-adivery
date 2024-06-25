@@ -38,6 +38,7 @@ class AndroidExportPlugin extends EditorExportPlugin:
 	func _get_android_dependencies(platform: EditorExportPlatform, debug: bool) -> PackedStringArray:
 		return PackedStringArray(["com.adivery:sdk:4.6.0"])
 	
+	
 	# Return the plugin's name.
 	func _get_name():
 		return _plugin_name

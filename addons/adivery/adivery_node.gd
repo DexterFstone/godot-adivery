@@ -102,7 +102,7 @@ func _ready() -> void:
 		if not ad.prepare: continue
 		match ad.type:
 			Advertisement.Type.APP_OPEN:
-				prepare_app_open_dd(ad)
+				prepare_app_open_ad(ad)
 			Advertisement.Type.INTERSTITIAL:
 				prepare_interstitial_ad(ad)
 			Advertisement.Type.REWARDED:
@@ -150,10 +150,7 @@ func prepare_interstitial_ad(advertisement: Advertisement = null) -> void:
 	if not Engine.has_singleton(_singleton_name): return
 	if advertisement:
 		_singleton.prepare_interstitial_ad(advertisement.placement_id)
-		_singleton._on_interstitial_ad_loaded.connect(_on_interstitial_ad_loaded)
-		_singleton._on_interstitial_ad_shown.connect(_on_interstitial_ad_shown)
-		_singleton._on_interstitial_ad_clicked.connect(_on_interstitial_ad_clicked)
-		_singleton._on_interstitial_ad_closed.connect(_on_interstitial_ad_closed)
+		_connect_interstitial_signals()
 	else :
 		_prepare_all_advertisement(Advertisement.Type.INTERSTITIAL)
 ## آماده سازی تبلیغات جایزه ای
@@ -167,10 +164,7 @@ func request_rewarded_ad(advertisement: Advertisement = null) -> void:
 	if not Engine.has_singleton(_singleton_name): return
 	if advertisement:
 		_singleton.request_rewarded_ad(advertisement.placement_id)
-		_singleton._on_rewarded_ad_loaded.connect(_on_rewarded_ad_loaded)
-		_singleton._on_rewarded_ad_shown.connect(_on_rewarded_ad_shown)
-		_singleton._on_rewarded_ad_clicked.connect(_on_rewarded_ad_clicked)
-		_singleton._on_rewarded_ad_closed.connect(_on_rewarded_ad_closed)
+		_connect_rewarded_signals()
 	else :
 		_prepare_all_advertisement(Advertisement.Type.REWARDED)
 ## آماده سازی تبلیغات بازشدن اپلیکیشن
@@ -180,14 +174,11 @@ func request_rewarded_ad(advertisement: Advertisement = null) -> void:
 ## [b]نکته:[/b] درصورتی که مقدار وروی خالی باشد، پلاگین بصورت خودکار تمامی تبلیغات بازشدن اپلیکیشن را آماده سازی میکند.
 ## [br]
 ## [b]نکته:[/b] درصورتی که مقدار [member Advertisement.prepare] برابر [code]true[/code] باشد نیازی به صدا زدن این دستور ندارید.
-func prepare_app_open_dd(advertisement: Advertisement = null) -> void:
+func prepare_app_open_ad(advertisement: Advertisement = null) -> void:
 	if not Engine.has_singleton(_singleton_name): return
 	if advertisement:
-		_singleton.request_rewarded_ad(advertisement.placement_id)
-		_singleton._on_app_open_ad_loaded.connect(_on_app_open_ad_loaded)
-		_singleton._on_app_open_ad_closed.connect(_on_app_open_ad_closed)
-		_singleton._on_app_open_ad_clicked.connect(_on_app_open_ad_clicked)
-		_singleton._on_app_open_ad_shown.connect(_on_app_open_ad_shown)
+		_singleton.prepare_app_open_ad(advertisement.placement_id)
+		_connect_app_open_signals()
 	else :
 		_prepare_all_advertisement(Advertisement.Type.APP_OPEN)
 ## نمایش تبلیغ جایزه ای و میان صفحه ای
@@ -269,27 +260,49 @@ func _get_advertisement(placement_id: String) -> Advertisement:
 
 func _prepare_all_advertisement(type: Advertisement.Type) -> void:
 	for ad in advertisements:
+		if not ad.prepare: continue
 		if ad.type != type: continue
 		match type:
 			Advertisement.Type.APP_OPEN:
-				_singleton.prepare_app_open_dd(ad.placement_id)
+				_singleton.prepare_app_open_ad(ad.placement_id)
 			Advertisement.Type.INTERSTITIAL:
 				_singleton.prepare_interstitial_ad(ad.placement_id)
 			Advertisement.Type.REWARDED:
 				_singleton.request_rewarded_ad(ad.placement_id)
 	match type:
 		Advertisement.Type.APP_OPEN:
-			_singleton._on_app_open_ad_loaded.connect(_on_app_open_ad_loaded)
-			_singleton._on_app_open_ad_closed.connect(_on_app_open_ad_closed)
-			_singleton._on_app_open_ad_clicked.connect(_on_app_open_ad_clicked)
-			_singleton._on_app_open_ad_shown.connect(_on_app_open_ad_shown)
+			_connect_app_open_signals()
 		Advertisement.Type.INTERSTITIAL:
-			_singleton._on_interstitial_ad_loaded.connect(_on_interstitial_ad_loaded)
-			_singleton._on_interstitial_ad_shown.connect(_on_interstitial_ad_shown)
-			_singleton._on_interstitial_ad_clicked.connect(_on_interstitial_ad_clicked)
-			_singleton._on_interstitial_ad_closed.connect(_on_interstitial_ad_closed)
+			_connect_interstitial_signals()
 		Advertisement.Type.REWARDED:
-			_singleton._on_rewarded_ad_loaded.connect(_on_rewarded_ad_loaded)
-			_singleton._on_rewarded_ad_shown.connect(_on_rewarded_ad_shown)
-			_singleton._on_rewarded_ad_clicked.connect(_on_rewarded_ad_clicked)
-			_singleton._on_rewarded_ad_closed.connect(_on_rewarded_ad_closed)
+			_connect_rewarded_signals()
+
+func _connect_app_open_signals() -> void:
+	if not _singleton.is_connected("_on_app_open_ad_loaded",_on_app_open_ad_loaded):
+		_singleton._on_app_open_ad_loaded.connect(_on_app_open_ad_loaded)
+	if not _singleton.is_connected("_on_app_open_ad_closed",_on_app_open_ad_closed):
+		_singleton._on_app_open_ad_closed.connect(_on_app_open_ad_closed)
+	if not _singleton.is_connected("_on_app_open_ad_clicked",_on_app_open_ad_clicked):
+		_singleton._on_app_open_ad_clicked.connect(_on_app_open_ad_clicked)
+	if not _singleton.is_connected("_on_app_open_ad_shown",_on_app_open_ad_shown):
+		_singleton._on_app_open_ad_shown.connect(_on_app_open_ad_shown)
+
+func _connect_interstitial_signals() -> void:
+	if not _singleton.is_connected("_on_interstitial_ad_loaded",_on_interstitial_ad_loaded):
+		_singleton._on_interstitial_ad_loaded.connect(_on_interstitial_ad_loaded)
+	if not _singleton.is_connected("_on_interstitial_ad_shown",_on_interstitial_ad_shown):
+		_singleton._on_interstitial_ad_shown.connect(_on_interstitial_ad_shown)
+	if not _singleton.is_connected("_on_interstitial_ad_clicked",_on_interstitial_ad_clicked):
+		_singleton._on_interstitial_ad_clicked.connect(_on_interstitial_ad_clicked)
+	if not _singleton.is_connected("_on_interstitial_ad_closed",_on_interstitial_ad_closed):
+		_singleton._on_interstitial_ad_closed.connect(_on_interstitial_ad_closed)
+
+func _connect_rewarded_signals() -> void:
+	if not _singleton.is_connected("_on_rewarded_ad_loaded",_on_rewarded_ad_loaded):
+		_singleton._on_rewarded_ad_loaded.connect(_on_rewarded_ad_loaded)
+	if not _singleton.is_connected("_on_rewarded_ad_shown",_on_rewarded_ad_shown):
+		_singleton._on_rewarded_ad_shown.connect(_on_rewarded_ad_shown)
+	if not _singleton.is_connected("_on_rewarded_ad_clicked",_on_rewarded_ad_clicked):
+		_singleton._on_rewarded_ad_clicked.connect(_on_rewarded_ad_clicked)
+	if not _singleton.is_connected("_on_rewarded_ad_closed",_on_rewarded_ad_closed):
+		_singleton._on_rewarded_ad_closed.connect(_on_rewarded_ad_closed)

@@ -46,15 +46,11 @@ public class GodotAdivery extends GodotPlugin {
     @UsedByGodot
     public void configure(String app_id) {
         Adivery.configure(getGodot().getActivity().getApplication(),app_id);
-        if (BuildConfig.DEBUG)
-            Log.d(TAG, "configure: " + app_id);
     }
     @UsedByGodot
     public void show_log() {
         Adivery.addGlobalListener(new AdiveryListener() {
             public void log(String placementId, String message) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "log: " + placementId +" " + message);
                 emitSignal("_on_log",placementId,message);
             }
         });
@@ -65,23 +61,15 @@ public class GodotAdivery extends GodotPlugin {
         Adivery.addGlobalListener(new AdiveryListener() {
             @Override
             public void onInterstitialAdLoaded(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onInterstitialAdLoaded: " + placementId);
                 emitSignal("_on_interstitial_ad_loaded",placementId);
             }
             public void onInterstitialAdShown(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onInterstitialAdShown: " + placementId);
                 emitSignal("_on_interstitial_ad_shown",placementId);
             }
             public void onInterstitialAdClicked(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onInterstitialAdClicked: " + placementId);
                 emitSignal("_on_interstitial_ad_clicked",placementId);
             }
             public void onInterstitialAdClosed(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onInterstitialAdClosed: " + placementId);
                 emitSignal("_on_interstitial_ad_closed",placementId);
             }
         });
@@ -91,23 +79,15 @@ public class GodotAdivery extends GodotPlugin {
         Adivery.prepareRewardedAd(getGodot().getActivity().getApplication(),placement_id);
         Adivery.addGlobalListener(new AdiveryListener() {
             public void onRewardedAdLoaded(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onRewardedAdLoaded: " + placementId);
                 emitSignal("_on_rewarded_ad_loaded",placementId);
             }
             public void onRewardedAdShown(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onRewardedAdShown: " + placementId);
                 emitSignal("_on_rewarded_ad_shown",placementId);
             }
             public void onRewardedAdClicked(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onRewardedAdClicked: " + placementId);
                 emitSignal("_on_rewarded_ad_clicked",placementId);
             }
             public void onRewardedAdClosed(String placementId, boolean isRewarded) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onRewardedAdClosed: " + placement_id + "isRewarded: " +isRewarded);
                 emitSignal("_on_rewarded_ad_closed",placementId,isRewarded);
             }
         });
@@ -117,23 +97,15 @@ public class GodotAdivery extends GodotPlugin {
         Adivery.prepareAppOpenAd(getGodot().getActivity(),placement_id);
         Adivery.addGlobalListener(new AdiveryListener() {
             public void onAppOpenAdLoaded(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onAppOpenAdLoaded: " + placementId);
                 emitSignal("_on_app_open_ad_loaded",placementId);
             }
             public void onAppOpenAdClosed(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onAppOpenAdClosed: " + placementId);
                 emitSignal("_on_app_open_ad_closed",placementId);
             }
             public void onAppOpenAdClicked(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onAppOpenAdClicked: " + placementId);
                 emitSignal("_on_app_open_ad_clicked",placementId);
             }
             public void onAppOpenAdShown(String placementId) {
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onAppOpenAdShown: " + placementId);
                 emitSignal("_on_app_open_ad_shown",placementId);
             }
         });
@@ -147,16 +119,12 @@ public class GodotAdivery extends GodotPlugin {
     @UsedByGodot
     public void show_ad(String placement_id) {
         if (Adivery.isLoaded(placement_id)) {
-            if (BuildConfig.DEBUG)
-                Log.d(TAG, "show_ad: " + placement_id);
             Adivery.showAd(placement_id);
         }
     }
     @UsedByGodot
     public void show_app_open_ad(String placement_id) {
         if (Adivery.isLoaded(placement_id)) {
-            if (BuildConfig.DEBUG)
-                Log.d(TAG, "show_app_open_ad: " + placement_id);
             Adivery.showAppOpenAd(getGodot().getActivity(), placement_id);
         }
     }

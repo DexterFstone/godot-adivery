@@ -110,6 +110,10 @@ public class GodotAdivery extends GodotPlugin {
             }
         });
     }
+    @UsedByGodot
+    public void prepare_banner_ad(String placement_id) {
+
+    }
 //    @UsedByGodot
 //    public Boolean is_loaded(String placement_id) {
 //        if (BuildConfig.DEBUG)

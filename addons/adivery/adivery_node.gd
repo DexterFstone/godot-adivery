@@ -85,8 +85,8 @@ signal on_app_open_ad_shown(advertisement: Advertisement)
 ## لیست تبلیغ گاه های شما
 @export var advertisements: Array[Advertisement]
 
-var _singleton: JNISingleton
-var _singleton_name: String = "GodotAdivery"
+static var _singleton: JNISingleton
+static var _singleton_name: String = "GodotAdivery"
 
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "advertisements":

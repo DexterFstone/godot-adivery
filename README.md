@@ -1,6 +1,11 @@
 <p align="center"> <img src="https://www.adivery.com/wp-content/uploads/2021/06/logo3.svg" </p>
 <h1 align="center"> گودو ادیوری </h1>
 <p align="center">  پلاگین ادیوری برای موتور بازی سازی گودو </p>
+
+## پیش نیازها
+- گودو 4.2 و یا بالاتر
+- [خروجی اندروید](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_android.html)
+- [خروجی اندروید با گریدل](https://docs.godotengine.org/en/stable/tutorials/export/android_gradle_build.html)
  
 ## دریافت ادیوری
 ادیوری را میتوانید از [Asset Library](https://godotengine.org/asset-library/asset/3094) و یا [Release](https://github.com/DexterFstone/godot-adivery/releases) دریافت کنید.
@@ -37,6 +42,9 @@
 - یک سین جدید ساخته و نود ادیوری به آن اضافه کنید.
 <p align="center"> <img src="/screenshots/03%20Add%20Adivery%20To%20Scene.PNG" </p>
 
+- جهت استفاده از سیگنال ها، نود ادیوری را انتخاب کرده و اسکریپت نود ادیوری قطع کرده و یک اسکریپت جدید اضافه میکنیم.
+<p align="center"> <img src="/screenshots/08%20Add%20New%20Script%20To%20Adivery.PNG" </p>
+
 - در اینسپکتور در بخش `App Id` شناسته اپلیکیشن خود را از [داشبورد ادیوری](https://panel.adivery.com/) دریافت کرده و جایگزین کنید.
 
 > [!NOTE]
@@ -51,3 +59,71 @@
 
 > [!NOTE]
 > به هر تعداد تبلیغ که نیاز داشتید می توانید اضافه کنید و محدودیتی ندارید.
+
+- در اینجا ما از هر تبلیغ یک نمونه ایجاد میکنیم.
+<p align="center"> <img src="/screenshots/06%20Add%20Advertisements%20To%20Adivery.png" </p>
+
+- درآخر سین را ذخیره کردن و در قسمت تنظیمات پروژه به [اتولود](https://docs.godotengine.org/en/stable/tutorials/scripting/singletons_autoload.html) رفته و سین را اضافه میکنیم. حال میتوان از پلاگین استفاده کرد و همه جا قابلیت دسترسی دارد.
+<p align="center"> <img src="/screenshots/07%20Add%20To%20Autoload.PNG" </p>
+
+> [!WARNING]
+> توجه داشته باشید که نام نود را در قسمت اتولود تغییر دهید و امکان استفاده از نام `Adivery` نمی باشد. برای مثال ما در اینجا `AdiveryManager` قرار داده ایم و تا انتهای آموزش از آن استفاده میکنیم.
+
+### روش دوم
+- یک اسکریپت ساخته و نوع آن را `Adivery` قرار میدهیم.
+<p align="center"> <img src="/screenshots/09%20Create%20New%20Script.PNG" </p>
+
+- در قسمت تنظیمات پروژه به [اتولود](https://docs.godotengine.org/en/stable/tutorials/scripting/singletons_autoload.html) رفته و اسکریپت را اضافه میکنیم. حال میتوان از پلاگین استفاده کرد و همه جا قابلیت دسترسی دارد.
+<p align="center"> <img src="/screenshots/10%20Add%20To%20Autoload.PNG" </p>
+
+> [!WARNING]
+> توجه داشته باشید که نام نود را در قسمت اتولود تغییر دهید و امکان استفاده از نام `Adivery` نمی باشد. برای مثال ما در اینجا `AdiveryManager` قرار داده ایم و تا انتهای آموزش از آن استفاده میکنیم.
+
+- حال در اسکریپت دستورات زیر را می نویسیم.
+```gdscript
+extends Adivery
+
+func _ready() -> void:
+	# پیکربندی ادیوری 
+	configure("شناسه اپلیکیشن")
+	# ساخت تبلیغ بازشدن اپلیکیشن 
+	var app_open_advertisement:= AppOpenAdvertisement.new()
+	app_open_advertisement.placement_id = "شناسه تبلیغ"
+	# ساخت تبلیغ میان صفحه ای 
+	var interstitial_advertisement:= InterstitialAdvertisement.new()
+	interstitial_advertisement.placement_id = "شناسه تبلیغ"
+	# ساخت تبلیغ جایزه ای 
+	var rewarded_advertisement:= RewardedAdvertisement.new()
+	rewarded_advertisement.placement_id = "شناسه تبلیغ"
+	# آماده سازی تبلیغ بازشدن اپلیکیشن 
+	prepare_app_open_ad(app_open_advertisement)
+	# آماده سازی تبلیغ میان صفحه ای 
+	prepare_interstitial_ad(interstitial_advertisement)
+	# آماده سازی تبلیغ جایزه ای 
+	request_rewarded_ad(rewarded_advertisement)
+```
+> [!WARNING]
+> درصورت تست پلاگین، شاسه اپلیکیشن و شناسه تبلیغ را خالی قرار دهید. پلاگین به صورت پیشفرض از شناسه تست درج شده در [سایت ادیوری](https://docs.adivery.com/testing) استفاده میکند.
+```gdscript
+extends Adivery
+
+func _ready() -> void:
+	# پیکربندی ادیوری 
+	configure()
+	# ساخت تبلیغ بازشدن اپلیکیشن 
+	var app_open_advertisement:= AppOpenAdvertisement.new()
+	# ساخت تبلیغ میان صفحه ای 
+	var interstitial_advertisement:= InterstitialAdvertisement.new()
+	# ساخت تبلیغ جایزه ای 
+	var rewarded_advertisement:= RewardedAdvertisement.new()
+	# آماده سازی تبلیغ بازشدن اپلیکیشن 
+	prepare_app_open_ad(app_open_advertisement)
+	# آماده سازی تبلیغ میان صفحه ای 
+	prepare_interstitial_ad(interstitial_advertisement)
+	# آماده سازی تبلیغ جایزه ای 
+	request_rewarded_ad(rewarded_advertisement)
+```
+> [!NOTE]
+> به هر تعداد تبلیغ که نیاز داشتید می توانید اضافه کنید و محدودیتی ندارید.
+
+

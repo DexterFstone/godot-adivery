@@ -107,21 +107,23 @@ func _ready() -> void:
 ```gdscript
 extends Adivery
 
+# ساخت تبلیغ بازشدن اپلیکیشن 
+@onready var app_open_advertisement:= AppOpenAdvertisement.new()
+# ساخت تبلیغ میان صفحه ای 
+@onready var interstitial_advertisement:= InterstitialAdvertisement.new()
+# ساخت تبلیغ جایزه ای 
+@onready var rewarded_advertisement:= RewardedAdvertisement.new()
+
 func _ready() -> void:
 	# پیکربندی ادیوری 
 	configure()
-	# ساخت تبلیغ بازشدن اپلیکیشن 
-	var app_open_advertisement:= AppOpenAdvertisement.new()
-	# ساخت تبلیغ میان صفحه ای 
-	var interstitial_advertisement:= InterstitialAdvertisement.new()
-	# ساخت تبلیغ جایزه ای 
-	var rewarded_advertisement:= RewardedAdvertisement.new()
 	# آماده سازی تبلیغ بازشدن اپلیکیشن 
 	prepare_app_open_ad(app_open_advertisement)
 	# آماده سازی تبلیغ میان صفحه ای 
 	prepare_interstitial_ad(interstitial_advertisement)
 	# آماده سازی تبلیغ جایزه ای 
 	request_rewarded_ad(rewarded_advertisement)
+
 ```
 > [!NOTE]
 > به هر تعداد تبلیغ که نیاز داشتید می توانید اضافه کنید و محدودیتی ندارید.

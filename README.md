@@ -42,7 +42,8 @@
 - یک سین جدید ساخته و نود ادیوری به آن اضافه کنید.
 <p align="center"> <img src="/screenshots/03%20Add%20Adivery%20To%20Scene.PNG" </p>
 
-- جهت استفاده از سیگنال ها، نود ادیوری را انتخاب کرده و اسکریپت نود ادیوری قطع کرده و یک اسکریپت جدید اضافه میکنیم.
+- جهت استفاده از سیگنال ها، نود ادیوری را انتخاب کرده، در اینسپکتور و در قسمت اسکریپت بر روی فلش اسکریپت کلیک کرده و روی `Extend Script` کلیک میکنیم.
+<p align="center"> <img src="/screenshots/11%20Extend%20Script.PNG" </p>
 <p align="center"> <img src="/screenshots/08%20Add%20New%20Script%20To%20Adivery.PNG" </p>
 
 - در اینسپکتور در بخش `App Id` شناسته اپلیکیشن خود را از [داشبورد ادیوری](https://panel.adivery.com/) دریافت کرده و جایگزین کنید.
@@ -103,7 +104,7 @@ func _ready() -> void:
 	request_rewarded_ad(rewarded_advertisement)
 ```
 > [!WARNING]
-> درصورت تست پلاگین، شاسه اپلیکیشن و شناسه تبلیغ را خالی قرار دهید. پلاگین به صورت پیشفرض از شناسه تست درج شده در [سایت ادیوری](https://docs.adivery.com/testing) استفاده میکند.
+> درصورت تست پلاگین، شناسه اپلیکیشن و شناسه تبلیغ را خالی قرار دهید. پلاگین به صورت پیشفرض از شناسه تست درج شده در [سایت ادیوری](https://docs.adivery.com/testing) استفاده میکند.
 ```gdscript
 extends Adivery
 

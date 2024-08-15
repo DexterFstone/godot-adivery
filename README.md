@@ -2,6 +2,15 @@
 <h1 align="center"> گودو ادیوری </h1>
 <p align="center">  پلاگین ادیوری برای موتور بازی سازی گودو </p>
 
+## فهرست مطالب
+- [پیش نیازها](#پیش-نیازها)
+- [دریافت ادیوری](#دریافت-ادیوری)
+- [نصب ادیوری](#نصب-ادیوری)
+	- [روش اول (دریافت از Release)](#روش-اول)
+	- [روش دوم (دریافت از Asset Library)](#روش-دوم)
+	- [روش سوم (پیشنهادی)](#روش-سوم)
+ - درحال تکمیل...
+
 ## پیش نیازها
 - گودو 4.2 و یا بالاتر
 - [خروجی اندروید](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_android.html)
@@ -11,21 +20,21 @@
 ادیوری را میتوانید از [Asset Library](https://godotengine.org/asset-library/asset/3094) و یا [Release](https://github.com/DexterFstone/godot-adivery/releases) دریافت کنید.
 
 ## نصب ادیوری
-### روش اول (دریافت از Release)
+### روش اول
 - پس از دریافت ادیوری از [Release](https://github.com/DexterFstone/godot-adivery/releases) فایل زیپ را استخراج کنید.
 - فایل استخراج شده را در محل پروژه خود کپی کنید.
 - از منوی `Project` وارد قسمت `Project Settings` و وارد تب `Plugins` شوید.
 - در مرحله آخر تیک فعال سازی ادیوری را بزنید.
 <p align="center"> <img src="/screenshots/01%20Enabling%20Plugin.PNG" </p>
   
-### روش دوم (دریافت از Asset Library)
+### روش دوم
 - پس از دریافت ادیوری از [Asset Library](https://godotengine.org/asset-library/asset/3094) فایل زیپ را استخراج کنید.
 - فایل استخراج شده را در محل پروژه خود کپی کنید.
 - از منوی `Project` وارد قسمت `Project Settings` و وارد تب `Plugins` شوید.
 - در مرحله آخر تیک فعال سازی ادیوری را بزنید.
 <p align="center"> <img src="/screenshots/01%20Enabling%20Plugin.PNG" </p>
 
-### روش سوم (پیشنهادی)
+### روش سوم
 - در داخل گودو به تب `AssetLib` بروید.
 - در بخش جستوجو به دنبال `Adivery` بگردید و روی آن کلیک کنید.
 - در پنجره باز شده روی `Download` کلیک کنید.

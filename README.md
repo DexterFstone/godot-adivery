@@ -49,7 +49,7 @@
 <p align="center"> <img src="/screenshots/01%20Enabling%20Plugin.PNG" </p>
 
 ## نحوه استفاده
-### روش اول (پیشنهادی)
+### روش اول
 - یک سین جدید ساخته و نود ادیوری به آن اضافه کنید.
 <p align="center"> <img src="/screenshots/03%20Add%20Adivery%20To%20Scene.PNG" </p>
 

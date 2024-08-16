@@ -162,4 +162,4 @@ func _ready() -> void:
 > [!NOTE]
 > توجه داشته باشید در صورت تست پلاگین، در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با `org.godotengine.adivery` باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
 > <p align="center"> <img src="/screenshots/13%20Set%20Package%20Name.PNG" </p>
-- در آخر می توان با استفاده از دستور `()show_app_open_ad` تبلیغ خود را در جای مناسب نمایش دهید.
+- در آخر می توان با استفاده از دستور `()AdiveryManager.show_app_open_ad` تبلیغ خود را در جای مناسب نمایش دهید.

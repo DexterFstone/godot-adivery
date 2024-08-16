@@ -9,9 +9,11 @@
 	- [روش اول (دریافت از Release)](#روش-اول)
 	- [روش دوم (دریافت از Asset Library)](#روش-دوم)
 	- [روش سوم (پیشنهادی)](#روش-سوم)
- - [نحوه استفاده](#نحوه-استفاده)
+- [نحوه استفاده](#نحوه-استفاده)
  	- [روش اول (پیشنهادی)](#روش-اول-1)
   	- [روش دوم](#روش-دوم-1)
+- [پیاده سازی تبلیغات بازشدن اپلیکیشن (بازگشت به برنامه)](#پیاده-سازی-تبلیغات-بازشدن-اپلیکیش)
+	- [روش اول (پیشنهادی)](#روش-اول-2)
 
 ## پیش نیازها
 - گودو 4.2 و یا بالاتر
@@ -141,8 +143,8 @@ func _ready() -> void:
 > [!NOTE]
 > به هر تعداد تبلیغ که نیاز داشتید می توانید اضافه کنید و محدودیتی ندارید.
 
-## پیاده سازی تبلیغات بازشدن اپلیکیشن (بازگشت به برنامه)
-### روش اول (پیشنهادی)
+## پیاده سازی تبلیغات بازشدن اپلیکیش
+### روش اول
 - اطمینان حاصل کنید که ادیوری را به روش اول پیکربندی کرده باشید.
 - در قدم بعد نیاز می باشد تا اطلاعات تبلیغ را ویرایش کنیم.
 <p align="center"> <img src="/screenshots/12%20Update%20Ad%20Info.PNG" </p>
@@ -165,3 +167,21 @@ func _ready() -> void:
 > توجه داشته باشید در صورت تست پلاگین، در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با `org.godotengine.adivery` باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
 > <p align="center"> <img src="/screenshots/13%20Set%20Package%20Name.PNG" </p>
 - در آخر می توان با استفاده از دستور `()AdiveryManager.show_app_open_ad` تبلیغ خود را در جای مناسب نمایش دهید.
+- جهت اطلاع از وضعیت تبلیغ کافی است سیگنال های آن را در قسمت اینسپکتور متصل کنید.
+<p align="center"> <img src="/screenshots/14%20Connect%20Signals.PNG" </p>
+
+```gdscript
+...
+func _on_on_app_open_ad_clicked(advertisement: Advertisement) -> void:
+	pass # تبلیغ کلیک شد
+
+func _on_on_app_open_ad_closed(advertisement: Advertisement) -> void:
+	pass # تبلیغ بسته شد
+
+func _on_on_app_open_ad_loaded(advertisement: Advertisement) -> void:
+	pass # تبلیغ بارگیری شد
+
+func _on_on_app_open_ad_shown(advertisement: Advertisement) -> void:
+	pass # تبلیغ نمایش داده شد
+...
+```

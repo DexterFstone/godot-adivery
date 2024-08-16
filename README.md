@@ -172,16 +172,16 @@ func _ready() -> void:
 
 ```gdscript
 ...
-func _on_on_app_open_ad_clicked(advertisement: Advertisement) -> void:
+func _on_app_open_ad_clicked(advertisement: Advertisement) -> void:
 	pass # تبلیغ کلیک شد
 
-func _on_on_app_open_ad_closed(advertisement: Advertisement) -> void:
+func _on_app_open_ad_closed(advertisement: Advertisement) -> void:
 	pass # تبلیغ بسته شد
 
-func _on_on_app_open_ad_loaded(advertisement: Advertisement) -> void:
+func _on_app_open_ad_loaded(advertisement: Advertisement) -> void:
 	pass # تبلیغ بارگیری شد
 
-func _on_on_app_open_ad_shown(advertisement: Advertisement) -> void:
+func _on_app_open_ad_shown(advertisement: Advertisement) -> void:
 	pass # تبلیغ نمایش داده شد
 ...
 ```

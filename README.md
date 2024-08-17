@@ -185,3 +185,67 @@ func _on_app_open_ad_shown(advertisement: Advertisement) -> void:
 	pass # تبلیغ نمایش داده شد
 ...
 ```
+### روش دوم
+- اطمینان حاصل کنید که ادیوری را به [روش دوم](#روش-دوم-1) پیکربندی کرده باشید.
+```gdscript
+extends Adivery
+# ساخت تبلیغ بازشدن اپلیکیشن 
+@onready var app_open_advertisement:= AppOpenAdvertisement.new()
+
+func _ready() -> void:
+	# پیکربندی ادیوری
+	app_id = "1d0b8063-4971-4310-a7b1-8330ef89f46d"
+	configure()
+	# آماده سازی تبلیغ بازشدن اپلیکیشن 
+	app_open_advertisement.show_on_resume = true
+	app_open_advertisement.name = "YOUR ADVERTISEMENT NAME"
+	app_open_advertisement.placement_id = "9e994784-7084-473b-8ef5-cf3e8820251a"
+	prepare_app_open_ad(app_open_advertisement)
+	# اتصال سیگنال ها جهت بررسی وضعیت تبلیغ
+	app_open_ad_clicked.connect(_on_app_open_ad_clicked)
+	app_open_ad_closed.connect(_on_app_open_ad_closed)
+	app_open_ad_loaded.connect(_on_app_open_ad_loaded)
+	app_open_ad_shown.connect(_on_app_open_ad_shown)
+
+func _on_app_open_ad_clicked(advertisement: Advertisement) -> void:
+	pass # تبلیغ کلیک شد
+
+func _on_app_open_ad_closed(advertisement: Advertisement) -> void:
+	pass # تبلیغ بسته شد
+
+func _on_app_open_ad_loaded(advertisement: Advertisement) -> void:
+	pass # تبلیغ بارگیری شد
+
+func _on_app_open_ad_shown(advertisement: Advertisement) -> void:
+	pass # تبلیغ نمایش داده شد
+```
+> [!NOTE]
+> نمایش در زمان ورود یا `show_on_resume`، فقط و فقط برای یک تبلیغ اتفاق می افتد و الویت با آخرین تبلیغی است که این گزینه را فعال دارد.
+
+> [!NOTE]
+> توجه داشته باشید که در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با نام پکیج تعریف شده در [داشبورد ادیوری](https://panel.adivery.com/) شما باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+
+> [!NOTE]
+> درصورت تست پلاگین، مقدار پیشفرض `placement_id` , `app_id` را تغییر ندهید پلاگین به صورت پیشفرض از شناسه تست استفاده می کند.
+
+> [!NOTE]
+> توجه داشته باشید در صورت تست پلاگین، در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با `org.godotengine.adivery` باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+> <p align="center"> <img src="/screenshots/13%20Set%20Package%20Name.PNG" </p>
+- در آخر می توان با استفاده از دستور `(app_open_advertisement)AdiveryManager.show_app_open_ad` تبلیغ خود را در جای مناسب نمایش دهید.
+> [!NOTE]
+> درصورتی که متد `()AdiveryManager.show_app_open_ad` بدون پارامتر صدا زده شده باشد هیچ تبلیغی نمایش داده نمی شود و قبل از آن باید با متد `(app_open_advertisement)add_advertisement`، تبلیغ خود را به ادیوری اضافه کرده باشید.
+```gdscript
+...
+	configure()
+	# آماده سازی تبلیغ بازشدن اپلیکیشن 
+	app_open_advertisement.show_on_resume = true
+	app_open_advertisement.name = "YOUR ADVERTISEMENT NAME"
+	app_open_advertisement.placement_id = "9e994784-7084-473b-8ef5-cf3e8820251a"
+	add_advertisement(app_open_advertisement)
+	prepare_app_open_ad()
+...
+
+...
+	AdiveryManager.show_app_open_ad()
+...
+```

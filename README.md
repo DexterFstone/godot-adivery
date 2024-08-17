@@ -46,7 +46,7 @@
 
 <p align="center"> <img src="/screenshots/02%20Download%20Adivery.PNG" </p>
   
-- بعد زا دانلود شدن روی `Install` کلیک کنید.
+- بعد از دانلود شدن روی `Install` کلیک کنید.
 - از منوی Project وارد قسمت `Project Settings` و وارد تب `Plugins` شوید.
 - در مرحله آخر تیک فعال سازی ادیوری را بزنید.
 <p align="center"> <img src="/screenshots/01%20Enabling%20Plugin.PNG" </p>

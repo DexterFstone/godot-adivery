@@ -14,6 +14,7 @@
   	- [روش دوم](#روش-دوم-1)
 - [پیاده سازی تبلیغات بازشدن اپلیکیشن (بازگشت به برنامه)](#پیاده-سازی-تبلیغات-بازشدن-اپلیکیش)
 	- [روش اول (پیشنهادی)](#روش-اول-2)
+ 	- [روش دوم](#روش-دوم-2)
 
 ## پیش نیازها
 - گودو 4.2 و یا بالاتر
@@ -45,7 +46,7 @@
 
 <p align="center"> <img src="/screenshots/02%20Download%20Adivery.PNG" </p>
   
-- بعد زا دانلود شدن روی `Install` کلیک کنید.
+- بعد از دانلود شدن روی `Install` کلیک کنید.
 - از منوی Project وارد قسمت `Project Settings` و وارد تب `Plugins` شوید.
 - در مرحله آخر تیک فعال سازی ادیوری را بزنید.
 <p align="center"> <img src="/screenshots/01%20Enabling%20Plugin.PNG" </p>
@@ -150,20 +151,20 @@ func _ready() -> void:
 <p align="center"> <img src="/screenshots/12%20Update%20Ad%20Info.PNG" </p>
 
 - در بخش اول `Prepare` یا آماده سازی خودکار را داریم. درصورت فعال بودن پلاگین به صورت خودکار تبلیغ را آماده سازی می کند. درصورت غیرفعال بودن احتیاج است تا متد `()prepare_app_open_ad` را صدا بزنید.
-- در بخش بعد `Show on Resume` یا نمایش در زمان ورود را داریم. زمانی که این گزینه فعال باشد، درصورتی که اپلیکیشن شما به مدت 5 ثانیه یا بیشتر در پس زمینه باشد، بعد از بازگشت کاربر یک تبلیغ به آن نمایش داده می شود که یکی از اصولی ترین روش های نمایش تبلیغ بازشددن اپلیکیشن (بازشگت به اپلیکیشن) می باشد.
+- در بخش بعد `Show on Resume` یا نمایش در زمان ورود را داریم. زمانی که این گزینه فعال باشد، درصورتی که اپلیکیشن شما به مدت 5 ثانیه یا بیشتر در پس زمینه باشد، بعد از بازگشت کاربر یک تبلیغ به آن نمایش داده می شود که یکی از اصولی ترین روش های نمایش تبلیغ بازشددن اپلیکیشن (بازگشت به برنامه) می باشد.
 > [!NOTE]
 > نمایش در زمان ورود، فقط و فقط برای یک تبلیغ اتفاق می افتد و الویت با آخرین تبلیغی است که این گزینه را فعال دارد.
 
 - در بخش بعد `Name` یا نام تبلیغ را داریم. این فیلد کاملا اختیاری می باشد و می توان در بخشی از گیم پلی یا جهت دیباگ از آن استفاده کرد.
 - در بخش آخر `Placement ID` یا شناسه تبلیغ را داریم. شناسه تبلیغ را میتوان از [داشبورد ادیوری](https://panel.adivery.com/) دریافت کرده و جایگزین کنید تا درآمد تبلیغ برای شما محاسبه شود.
 
-> [!NOTE]
+> [!WARNING]
 > توجه داشته باشید که در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با نام پکیج تعریف شده در [داشبورد ادیوری](https://panel.adivery.com/) شما باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
 
-> [!NOTE]
+> [!WARNING]
 > درصورت تست پلاگین، مقدار پیشفرض را تغییر ندهید پلاگین به صورت پیشفرض از شناسه تست استفاده می کند.
 
-> [!NOTE]
+> [!WARNING]
 > توجه داشته باشید در صورت تست پلاگین، در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با `org.godotengine.adivery` باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
 > <p align="center"> <img src="/screenshots/13%20Set%20Package%20Name.PNG" </p>
 - در آخر می توان با استفاده از دستور `()AdiveryManager.show_app_open_ad` تبلیغ خود را در جای مناسب نمایش دهید.
@@ -172,16 +173,80 @@ func _ready() -> void:
 
 ```gdscript
 ...
-func _on_on_app_open_ad_clicked(advertisement: Advertisement) -> void:
+func _on_app_open_ad_clicked(advertisement: Advertisement) -> void:
 	pass # تبلیغ کلیک شد
 
-func _on_on_app_open_ad_closed(advertisement: Advertisement) -> void:
+func _on_app_open_ad_closed(advertisement: Advertisement) -> void:
 	pass # تبلیغ بسته شد
 
-func _on_on_app_open_ad_loaded(advertisement: Advertisement) -> void:
+func _on_app_open_ad_loaded(advertisement: Advertisement) -> void:
 	pass # تبلیغ بارگیری شد
 
-func _on_on_app_open_ad_shown(advertisement: Advertisement) -> void:
+func _on_app_open_ad_shown(advertisement: Advertisement) -> void:
 	pass # تبلیغ نمایش داده شد
+...
+```
+### روش دوم
+- اطمینان حاصل کنید که ادیوری را به [روش دوم](#روش-دوم-1) پیکربندی کرده باشید.
+```gdscript
+extends Adivery
+# ساخت تبلیغ بازشدن اپلیکیشن 
+@onready var app_open_advertisement:= AppOpenAdvertisement.new()
+
+func _ready() -> void:
+	# پیکربندی ادیوری
+	app_id = "1d0b8063-4971-4310-a7b1-8330ef89f46d"
+	configure()
+	# آماده سازی تبلیغ بازشدن اپلیکیشن 
+	app_open_advertisement.show_on_resume = true
+	app_open_advertisement.name = "YOUR ADVERTISEMENT NAME"
+	app_open_advertisement.placement_id = "9e994784-7084-473b-8ef5-cf3e8820251a"
+	prepare_app_open_ad(app_open_advertisement)
+	# اتصال سیگنال ها جهت بررسی وضعیت تبلیغ
+	app_open_ad_clicked.connect(_on_app_open_ad_clicked)
+	app_open_ad_closed.connect(_on_app_open_ad_closed)
+	app_open_ad_loaded.connect(_on_app_open_ad_loaded)
+	app_open_ad_shown.connect(_on_app_open_ad_shown)
+
+func _on_app_open_ad_clicked(advertisement: Advertisement) -> void:
+	pass # تبلیغ کلیک شد
+
+func _on_app_open_ad_closed(advertisement: Advertisement) -> void:
+	pass # تبلیغ بسته شد
+
+func _on_app_open_ad_loaded(advertisement: Advertisement) -> void:
+	pass # تبلیغ بارگیری شد
+
+func _on_app_open_ad_shown(advertisement: Advertisement) -> void:
+	pass # تبلیغ نمایش داده شد
+```
+> [!NOTE]
+> نمایش در زمان ورود یا `show_on_resume`، فقط و فقط برای یک تبلیغ اتفاق می افتد و الویت با آخرین تبلیغی است که این گزینه را فعال دارد.
+
+> [!WARNING]
+> توجه داشته باشید که در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با نام پکیج تعریف شده در [داشبورد ادیوری](https://panel.adivery.com/) شما باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+
+> [!WARNING]
+> درصورت تست پلاگین، مقدار پیشفرض `placement_id` , `app_id` را تغییر ندهید پلاگین به صورت پیشفرض از شناسه تست استفاده می کند.
+
+> [!WARNING]
+> توجه داشته باشید در صورت تست پلاگین، در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با `org.godotengine.adivery` باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+> <p align="center"> <img src="/screenshots/13%20Set%20Package%20Name.PNG" </p>
+- در آخر می توان با استفاده از دستور `(app_open_advertisement)AdiveryManager.show_app_open_ad` تبلیغ خود را در جای مناسب نمایش دهید.
+> [!WARNING]
+> درصورتی که متد `()AdiveryManager.show_app_open_ad` بدون پارامتر صدا زده شده باشد هیچ تبلیغی نمایش داده نمی شود و قبل از آن باید با متد `(app_open_advertisement)add_advertisement`، تبلیغ خود را به ادیوری اضافه کرده باشید.
+```gdscript
+...
+	configure()
+	# آماده سازی تبلیغ بازشدن اپلیکیشن 
+	app_open_advertisement.show_on_resume = true
+	app_open_advertisement.name = "YOUR ADVERTISEMENT NAME"
+	app_open_advertisement.placement_id = "9e994784-7084-473b-8ef5-cf3e8820251a"
+	add_advertisement(app_open_advertisement)
+	prepare_app_open_ad()
+...
+
+...
+	AdiveryManager.show_app_open_ad()
 ...
 ```

@@ -1,10 +1,10 @@
 package com.example.godotadivery;
 
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +26,7 @@ import com.adivery.sdk.networks.adivery.AdiveryNativeAd;
 
 import java.io.ByteArrayOutputStream;
 import android.util.Base64;
+
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -178,6 +179,15 @@ public class GodotAdivery extends GodotPlugin {
                 width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getActivity().getResources().getDisplayMetrics());
                 height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getActivity().getResources().getDisplayMetrics());
                 bannerAdView.setBannerSize(BannerSize.MEDIUM_RECTANGLE);
+            }
+            case 4 -> {
+                width = (int) getActivity().getWindow().getDecorView().getWidth();
+                if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getActivity().getResources().getDisplayMetrics());
+                } else if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, getActivity().getResources().getDisplayMetrics());
+                }
+                bannerAdView.setBannerSize(BannerSize.SMART_BANNER);
             }
         }
         int finalWidth = width;

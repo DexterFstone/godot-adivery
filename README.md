@@ -288,3 +288,63 @@ func _on_interstitial_ad_shown(advertisement: Advertisement) -> void:
 	pass # تبلیغ نمایش داده شد 
 ...
 ```
+### روش دوم
+- اطمینان حاصل کنید که ادیوری را به [روش دوم](#روش-دوم-1) پیکربندی کرده باشید.
+```gdscript
+extends Adivery
+# ساخت تبلیغ میان صفحه ای 
+@onready var interstitial_advertisement:= InterstitialAdvertisement.new()
+
+func _ready() -> void:
+	# پیکربندی ادیوری
+	app_id = "1d0b8063-4971-4310-a7b1-8330ef89f46d"
+	configure()
+	# آماده سازی تبلیغ میان صفحه ای 
+	interstitial_advertisement.name = "YOUR ADVERTISEMENT NAME"
+	interstitial_advertisement.placement_id = "142f7ca3-ce20-474b-a974-aaf9442b4c14"
+	prepare_interstitial_ad(interstitial_advertisement)
+	# اتصال سیگنال ها جهت بررسی وضعیت تبلیغ 
+	interstitial_ad_clicked.connect(_on_interstitial_ad_clicked)
+	interstitial_ad_closed.connect(_on_interstitial_ad_closed)
+	interstitial_ad_loaded.connect(_on_interstitial_ad_loaded)
+	interstitial_ad_shown.connect(_on_interstitial_ad_shown)
+
+func _on_interstitial_ad_clicked(advertisement: Advertisement) -> void:
+	pass # تبلیغ کلیک شد
+
+func _on_interstitial_ad_closed(advertisement: Advertisement) -> void:
+	pass # تبلیغ بسته شد
+
+func _on_interstitial_ad_loaded(advertisement: Advertisement) -> void:
+	pass # تبلیغ بارگیری شد
+
+func _on_interstitial_ad_shown(advertisement: Advertisement) -> void:
+	pass # تبلیغ نمایش داده شد
+
+```
+> [!TIP]
+> توجه داشته باشید که در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با نام پکیج تعریف شده در [داشبورد ادیوری](https://panel.adivery.com/) شما باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+
+> [!TIP]
+> درصورت تست پلاگین، مقدار پیشفرض `placement_id` , `app_id` را تغییر ندهید پلاگین به صورت پیشفرض از شناسه تست استفاده می کند.
+
+> [!TIP]
+> توجه داشته باشید در صورت تست پلاگین، در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با `org.godotengine.adivery` باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+> <p align="center"> <img src="/screenshots/13%20Set%20Package%20Name.PNG" </p>
+- در آخر می توان با استفاده از دستور `(interstitial_advertisement)AdiveryManager.show_interstitial_ad` تبلیغ خود را در جای مناسب نمایش دهید.
+> [!TIP]
+> درصورتی که متد `()AdiveryManager.show_interstitial_ad` بدون پارامتر صدا زده شده باشد هیچ تبلیغی نمایش داده نمی شود و قبل از آن باید با متد `(interstitial_advertisement)add_advertisement`، تبلیغ خود را به ادیوری اضافه کرده باشید.
+```gdscript
+...
+	configure()
+	# آماده سازی تبلیغ میان صفحه ای
+	interstitial_advertisement.name = "YOUR ADVERTISEMENT NAME"
+	interstitial_advertisement.placement_id = "142f7ca3-ce20-474b-a974-aaf9442b4c14"
+	add_advertisement(interstitial_advertisement)
+	prepare_interstitial_ad()
+...
+
+...
+	AdiveryManager.show_interstitial_ad()
+...
+```

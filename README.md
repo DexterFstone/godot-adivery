@@ -272,7 +272,7 @@ func _on_app_open_ad_shown(advertisement: Advertisement) -> void:
 > [!TIP]
 > توجه داشته باشید در صورت تست پلاگین، در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با `org.godotengine.adivery` باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
 > <p align="center"> <img src="/screenshots/13%20Set%20Package%20Name.PNG" </p>
-- در آخر می توان با استفاده از دستور `()AdiveryManager.show_rewarded_ad` تبلیغ خود را در جای مناسب نمایش دهید.
+- در آخر می توان با استفاده از دستور `()AdiveryManager.show_interstitial_ad` تبلیغ خود را در جای مناسب نمایش دهید.
 - جهت اطلاع از وضعیت تبلیغ کافی است سیگنال های آن را در قسمت اینسپکتور متصل کنید.
 <p align="center"> <img src="/screenshots/16%20Connect%20Signals.PNG" </p>
 	
@@ -350,4 +350,48 @@ func _on_interstitial_ad_shown(advertisement: Advertisement) -> void:
 ...
 	AdiveryManager.show_interstitial_ad()
 ...
+```
+## پیاده سازی تبلیغات جایزه ای (تمام صفحه جایزه ای)
+## روش اول (پیشنهادی)
+- اطمینان حاصل کنید که ادیوری را به [روش اول](#روش-اول-1) پیکربندی کرده باشید.
+- - در قدم بعد نیاز می باشد تا اطلاعات تبلیغ را ویرایش کنیم.
+<p align="center"> <img src="/screenshots/17%20Update%20Ad%20Info.PNG" </p>
+	
+- در بخش اول `Request` یا آماده سازی خودکار را داریم. درصورت فعال بودن پلاگین به صورت خودکار تبلیغ را آماده سازی می کند. درصورت غیرفعال بودن احتیاج است تا متد `()request_rewarded_ad` را صدا بزنید.
+- در بخش بعد `Name` یا نام تبلیغ را داریم. این فیلد کاملا اختیاری می باشد و می توان در بخشی از گیم پلی یا جهت دیباگ از آن استفاده کرد.
+- در بخش آخر `Placement ID` یا شناسه تبلیغ را داریم. شناسه تبلیغ را میتوان از [داشبورد ادیوری](https://panel.adivery.com/) دریافت کرده و جایگزین کنید تا درآمد تبلیغ برای شما محاسبه شود.
+
+> [!TIP]
+> توجه داشته باشید که در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با نام پکیج تعریف شده در [داشبورد ادیوری](https://panel.adivery.com/) شما باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+
+> [!TIP]
+> درصورت تست پلاگین، مقدار پیشفرض را تغییر ندهید پلاگین به صورت پیشفرض از شناسه تست استفاده می کند.
+
+> [!TIP]
+> توجه داشته باشید در صورت تست پلاگین، در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با `org.godotengine.adivery` باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+> <p align="center"> <img src="/screenshots/13%20Set%20Package%20Name.PNG" </p>
+- در آخر می توان با استفاده از دستور `()AdiveryManager.show_rewarded_ad` تبلیغ خود را در جای مناسب نمایش دهید.
+- جهت اطلاع از وضعیت تبلیغ کافی است سیگنال های آن را در قسمت اینسپکتور متصل کنید.
+<p align="center"> <img src="/screenshots/18%20Connect%20Signals.PNG" </p>
+	
+```gdscript
+...
+func _on_rewarded_ad_clicked(advertisement: Advertisement) -> void:
+	pass # تبلیغ کلیک شد 
+
+func _on_rewarded_ad_closed(advertisement: Advertisement, is_rewarded: bool) -> void:
+	pass # تبلیغ بسته شد 
+
+func _on_rewarded_ad_loaded(advertisement: Advertisement) -> void:
+	pass # تبلیغ بارگیری شد 
+
+func _on_rewarded_ad_shown(advertisement: Advertisement) -> void:
+	pass # تبلیغ نمایش داده شد 
+...
+```
+> [!TIP]
+> جهت جایزه دادن به کاربر از سیگنال `()on_rewarded_ad_closed_` استفاده کنید و با بررسی مقدار `is_rewarded` جایزه را بدهید.
+```gdscript
+	if is_rewarded:
+		pass # دستورات دادن جایزه
 ```

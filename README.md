@@ -20,6 +20,7 @@
 	 - [روش دوم](#روش-دوم-2)
 - [پیاده سازی تبلیغات جایزه ای (تمام صفحه جایزه ای)](#پیاده-سازی-تبلیغات-جایزه-ای-تمام-صفحه-جایزه-ای)
 	- [روش اول (پیشنهادی)](#روش-اول-پیشنهادی-3)
+	- [روش دوم](#روش-دوم-3)
 
 ## پیش نیازها
 - گودو 4.2 و یا بالاتر
@@ -397,4 +398,66 @@ func _on_rewarded_ad_shown(advertisement: Advertisement) -> void:
 func _on_rewarded_ad_closed(advertisement: Advertisement, is_rewarded: bool) -> void:
 	if is_rewarded:
 		pass # دستورات دادن جایزه
+```
+### روش دوم
+- اطمینان حاصل کنید که ادیوری را به [روش دوم](#روش-دوم-1) پیکربندی کرده باشید.
+```gdscript
+extends Adivery
+# ساخت تبلیغ جایزه ای 
+@onready var rewarded_advertisement:= RewardedAdvertisement.new()
+
+func _ready() -> void:
+	# پیکربندی ادیوری
+	app_id = "1d0b8063-4971-4310-a7b1-8330ef89f46d"
+	configure()
+	# آماده سازی تبلیغ جایزه ای 
+	rewarded_advertisement.name = "YOUR ADVERTISEMENT NAME"
+	rewarded_advertisement.placement_id = "39108e60-55bb-4f35-b903-810b844c72fe"
+	request_rewarded_ad(rewarded_advertisement)
+	# اتصال سیگنال ها جهت بررسی وضعیت تبلیغ 
+	rewarded_ad_clicked.connect(_on_rewarded_ad_clicked)
+	rewarded_ad_closed.connect(_on_rewarded_ad_closed)
+	rewarded_ad_loaded.connect(_on_rewarded_ad_loaded)
+	rewarded_ad_shown.connect(_on_rewarded_ad_shown)
+
+func _on_rewarded_ad_clicked(advertisement: Advertisement) -> void:
+	pass # تبلیغ کلیک شد 
+
+func _on_rewarded_ad_closed(advertisement: Advertisement, is_rewarded: bool) -> void:
+	if is_rewarded:
+		pass # دستورات دادن جایزه 
+	pass # تبلیغ بسته شد 
+
+func _on_rewarded_ad_loaded(advertisement: Advertisement) -> void:
+	pass # تبلیغ بارگیری شد 
+
+func _on_rewarded_ad_shown(advertisement: Advertisement) -> void:
+	pass # تبلیغ نمایش داده شد 
+
+```
+> [!TIP]
+> توجه داشته باشید که در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با نام پکیج تعریف شده در [داشبورد ادیوری](https://panel.adivery.com/) شما باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+
+> [!TIP]
+> درصورت تست پلاگین، مقدار پیشفرض `placement_id` , `app_id` را تغییر ندهید پلاگین به صورت پیشفرض از شناسه تست استفاده می کند.
+
+> [!TIP]
+> توجه داشته باشید در صورت تست پلاگین، در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با `org.godotengine.adivery` باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+> <p align="center"> <img src="/screenshots/13%20Set%20Package%20Name.PNG" </p>
+- در آخر می توان با استفاده از دستور `(rewarded_advertisement)AdiveryManager.show_rewarded_ad` تبلیغ خود را در جای مناسب نمایش دهید.
+> [!TIP]
+> درصورتی که متد `()AdiveryManager.show_rewarded_ad` بدون پارامتر صدا زده شده باشد هیچ تبلیغی نمایش داده نمی شود و قبل از آن باید با متد `(rewarded_advertisement)add_advertisement`، تبلیغ خود را به ادیوری اضافه کرده باشید.
+```gdscript
+...
+	configure()
+	# آماده سازی تبلیغ میان صفحه ای
+	rewarded_advertisement.name = "YOUR ADVERTISEMENT NAME"
+	rewarded_advertisement.placement_id = "142f7ca3-ce20-474b-a974-aaf9442b4c14"
+	add_advertisement(rewarded_advertisement)
+	request_rewarded_ad()
+...
+
+...
+	AdiveryManager.show_rewarded_ad()
+...
 ```

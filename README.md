@@ -23,6 +23,7 @@
 	- [روش دوم](#روش-دوم-3)
 - [پیاده سازی تبلیغات بنری](#پیاده-سازی-تبلیغات-بنری)
 	- [روش اول (پیشنهادی)](#روش-اول-پیشنهادی-4)
+	- [روش دوم](#روش-دوم-4)
 
 ## پیش نیازها
 - گودو 4.2 و یا بالاتر
@@ -518,4 +519,63 @@ func _on_banner_advertisement_shown(visibility: bool) -> void:
 ...
 ```
 > [!NOTE]
-> توجه داشته باشید که بنر در همه جا نمایش داده میشود و جهت پنهان سازی آن کافی است مقدار `visibility` را برابر با `false` قرار دهید یا از متد `close_banne()r` بنر را بصورت کامل ببندید.
+> توجه داشته باشید که بنر در همه جا نمایش داده میشود و جهت پنهان سازی آن کافی است مقدار `visibility` را برابر با `false` قرار دهید یا از متد `()close_banner` بنر را بصورت کامل ببندید.
+### روش دوم
+- اطمینان حاصل کنید که ادیوری را به [روش دوم](#روش-دوم-1) پیکربندی کرده باشید.
+```gdscript
+extends Adivery
+
+# ساخت تبلیغ بنری 
+@onready var banner_advertisement: = BannerAdvertisement.new()
+
+func _ready() -> void:
+	# پیکربندی ادیوری 
+	app_id = "1d0b8063-4971-4310-a7b1-8330ef89f46d"
+	configure()
+	# آماده سازی تبلیغ جایزه ای 
+	banner_advertisement.placement_id = "66e01251-50ac-4068-a05e-2c675e367611"
+	banner_advertisement.prepare_banner_ad()
+	banner_advertisement.set_banner_size(BannerAdvertisement.BannerSize.BANNER)
+	add_child(banner_advertisement)
+	# نمایش بنر 
+	banner_advertisement.load_banner_ad()
+	# اتصال سیگنال ها جهت بررسی وضعیت تبلیغ 
+	banner_advertisement.clicked.connect(_on_banner_advertisement_clicked)
+	banner_advertisement.closed.connect(_on_banner_advertisement_closed)
+	banner_advertisement.error.connect(_on_banner_advertisement_error)
+	banner_advertisement.loaded.connect(_on_banner_advertisement_loaded)
+
+func _on_banner_advertisement_clicked() -> void:
+	pass # تبلیغ کلیک شد 
+
+func _on_banner_advertisement_closed() -> void:
+	pass # تبلیغ بسته شد 
+
+func _on_banner_advertisement_error(reason: String) -> void:
+	pass # خطا دریافت شد 
+
+func _on_banner_advertisement_loaded() -> void:
+	pass # تبلیغ بارگیری شد 
+
+func _on_banner_advertisement_shown(visibility: bool) -> void:
+	pass # تبلیغ آشکار یا پنهان شد 
+
+```
+> [!CAUTION]
+> به هیچ عنوان از شناسه تبلیغ یکسان برای چندین بنر استفاده نکنید که دچار ارور خواهید شد.
+
+> [!TIP]
+> توجه داشته باشید که در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با نام پکیج تعریف شده در [داشبورد ادیوری](https://panel.adivery.com/) شما باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+
+> [!TIP]
+> درصورت تست پلاگین، مقدار پیشفرض را تغییر ندهید پلاگین به صورت پیشفرض از شناسه تست استفاده می کند.
+
+> [!TIP]
+> توجه داشته باشید در صورت تست پلاگین، در هنگام خروجی اندروید مقدار `package/unique_name` باید برابر با `org.godotengine.adivery` باشد در غیر اینصورت تبلیغی نمایش داده نمی شود.
+> <p align="center"> <img src="/screenshots/13%20Set%20Package%20Name.PNG" </p>
+
+> [!TIP]
+> برای تنظیم موقعیت بنر از نودهای `Control` کمک بگیرید.
+
+> [!NOTE]
+> توجه داشته باشید که بنر در همه جا نمایش داده میشود و جهت پنهان سازی آن کافی است مقدار `visibility` را برابر با `false` قرار دهید یا از متد `()close_banner` بنر را بصورت کامل ببندید.

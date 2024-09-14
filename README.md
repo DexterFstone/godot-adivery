@@ -584,6 +584,7 @@ func _on_banner_advertisement_shown(visibility: bool) -> void:
 - برای پیاده سازی تبلیغات همسان، اطمینان حاصل کنید که ادیوری را به [روش اول](#روش-اول-پیشنهادی) و یا [روش دوم](#روش-دوم-1) پیکربندی کرده باشید.
 - حال نود `NativeAdvertisement` را به سین مورد نظر اضافه کنید.
 <p align="center"> <img src="/screenshots/22%20Add%20Native%20To%20Scene.PNG" </p>
+	
 - در اینسپکتور تنظیمات همسان به این ترتیب می باشد.
 <p align="center"> <img src="/screenshots/23%20Update%20Ad%20Info.PNG" </p>
 	

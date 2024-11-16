@@ -7,17 +7,11 @@ var export_plugin : AndroidExportPlugin
 func _enter_tree():
 	# Initialization of the plugin goes here.
 	export_plugin = AndroidExportPlugin.new()
-	add_custom_type("Adivery","Node",preload("res://addons/adivery/adivery.gd"),preload("res://addons/adivery/icon.svg"))
-	add_custom_type("BannerAdvertisement","Control",preload("res://addons/adivery/banner_advertisement.gd"),preload("res://addons/adivery/icon.svg"))
-	add_custom_type("NativeAdvertisement","Control",preload("res://addons/adivery/native_advertisement.gd"),preload("res://addons/adivery/icon.svg"))
 	add_export_plugin(export_plugin)
 
 
 func _exit_tree():
 	# Clean-up of the plugin goes here.
-	remove_custom_type("NativeAdvertisement")
-	remove_custom_type("BannerAdvertisement")
-	remove_custom_type("Adivery")
 	remove_export_plugin(export_plugin)
 	export_plugin = null
 
